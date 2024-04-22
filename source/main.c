@@ -45,5 +45,6 @@ int main(void) {
             tight while() loop */
         __asm volatile ("nop");
     }
+    PRINTF("Hello World\r\n");
     return 0 ;
 }

@@ -216,65 +216,65 @@ Discarded input sections
  .data          0x00000000        0x0 ./startup/startup_mk64f12.o
  .bss           0x00000000        0x0 ./startup/startup_mk64f12.o
  .debug_macro   0x00000000      0xaea ./startup/startup_mk64f12.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .group         0x00000000        0xc ./source/Test.o
- .text          0x00000000        0x0 ./source/Test.o
- .data          0x00000000        0x0 ./source/Test.o
- .bss           0x00000000        0x0 ./source/Test.o
- .debug_macro   0x00000000      0xaea ./source/Test.o
- .debug_macro   0x00000000       0x10 ./source/Test.o
- .debug_macro   0x00000000      0x12e ./source/Test.o
- .debug_macro   0x00000000       0x16 ./source/Test.o
- .debug_macro   0x00000000       0x22 ./source/Test.o
- .debug_macro   0x00000000      0x5b3 ./source/Test.o
- .debug_macro   0x00000000       0x10 ./source/Test.o
- .debug_macro   0x00000000       0x58 ./source/Test.o
- .debug_macro   0x00000000       0x1c ./source/Test.o
- .debug_macro   0x00000000       0x22 ./source/Test.o
- .debug_macro   0x00000000       0xfb ./source/Test.o
- .debug_macro   0x00000000      0xeeb ./source/Test.o
- .debug_macro   0x00000000       0x40 ./source/Test.o
- .debug_macro   0x00000000     0xec5f ./source/Test.o
- .debug_macro   0x00000000     0x12e8 ./source/Test.o
- .debug_macro   0x00000000       0x7a ./source/Test.o
- .debug_macro   0x00000000       0xa8 ./source/Test.o
- .debug_macro   0x00000000      0x174 ./source/Test.o
- .debug_macro   0x00000000       0x70 ./source/Test.o
- .debug_macro   0x00000000       0x46 ./source/Test.o
- .debug_macro   0x00000000       0x16 ./source/Test.o
- .debug_macro   0x00000000       0x66 ./source/Test.o
- .debug_macro   0x00000000       0x1c ./source/Test.o
- .debug_macro   0x00000000       0x1c ./source/Test.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .group         0x00000000        0xc ./source/main.o
+ .text          0x00000000        0x0 ./source/main.o
+ .data          0x00000000        0x0 ./source/main.o
+ .bss           0x00000000        0x0 ./source/main.o
+ .debug_macro   0x00000000      0xaea ./source/main.o
+ .debug_macro   0x00000000       0x10 ./source/main.o
+ .debug_macro   0x00000000      0x12e ./source/main.o
+ .debug_macro   0x00000000       0x16 ./source/main.o
+ .debug_macro   0x00000000       0x22 ./source/main.o
+ .debug_macro   0x00000000      0x5b3 ./source/main.o
+ .debug_macro   0x00000000       0x10 ./source/main.o
+ .debug_macro   0x00000000       0x58 ./source/main.o
+ .debug_macro   0x00000000       0x1c ./source/main.o
+ .debug_macro   0x00000000       0x22 ./source/main.o
+ .debug_macro   0x00000000       0xfb ./source/main.o
+ .debug_macro   0x00000000      0xeeb ./source/main.o
+ .debug_macro   0x00000000       0x40 ./source/main.o
+ .debug_macro   0x00000000     0xec5f ./source/main.o
+ .debug_macro   0x00000000     0x12e8 ./source/main.o
+ .debug_macro   0x00000000       0x7a ./source/main.o
+ .debug_macro   0x00000000       0xa8 ./source/main.o
+ .debug_macro   0x00000000      0x174 ./source/main.o
+ .debug_macro   0x00000000       0x70 ./source/main.o
+ .debug_macro   0x00000000       0x46 ./source/main.o
+ .debug_macro   0x00000000       0x16 ./source/main.o
+ .debug_macro   0x00000000       0x66 ./source/main.o
+ .debug_macro   0x00000000       0x1c ./source/main.o
+ .debug_macro   0x00000000       0x1c ./source/main.o
  .group         0x00000000        0xc ./source/semihost_hardfault.o
  .text          0x00000000        0x0 ./source/semihost_hardfault.o
  .data          0x00000000        0x0 ./source/semihost_hardfault.o
@@ -1977,7 +1977,7 @@ Linker script and memory map
 LOAD ./utilities/fsl_debug_console.o
 LOAD ./utilities/fsl_str.o
 LOAD ./startup/startup_mk64f12.o
-LOAD ./source/Test.o
+LOAD ./source/main.o
 LOAD ./source/semihost_hardfault.o
 LOAD ./drivers/fsl_adc16.o
 LOAD ./drivers/fsl_clock.o
@@ -2159,7 +2159,7 @@ END GROUP
  .text.DbgConsole_Vprintf
                 0x0000057c       0x6c ./utilities/fsl_debug_console.o
                 0x0000057c                DbgConsole_Vprintf
- .text.main     0x000005e8       0x34 ./source/Test.o
+ .text.main     0x000005e8       0x34 ./source/main.o
                 0x000005e8                main
  .text.CLOCK_SetEr32kClock
                 0x0000061c       0x30 ./drivers/fsl_clock.o
@@ -2750,7 +2750,7 @@ END GROUP
  *(SORT_BY_ALIGNMENT(.rodata) SORT_BY_ALIGNMENT(.rodata.*) SORT_BY_ALIGNMENT(.constdata) SORT_BY_ALIGNMENT(.constdata.*))
  *fill*         0x00002ffe        0x2 ff
  .rodata.main.str1.4
-                0x00003000        0xe ./source/Test.o
+                0x00003000        0xe ./source/main.o
  *fill*         0x0000300e        0x2 ff
  .rodata.CLOCK_GetMcgExtClkFreq.str1.4
                 0x00003010       0x49 ./drivers/fsl_clock.o
@@ -2937,7 +2937,7 @@ END GROUP
  .bss.g_serialHandle
                 0x20000030        0x4 ./utilities/fsl_debug_console.o
                 0x20000030                g_serialHandle
- .bss.i.0       0x20000034        0x4 ./source/Test.o
+ .bss.i.0       0x20000034        0x4 ./source/main.o
  .bss.g_xtal0Freq
                 0x20000038        0x4 ./drivers/fsl_clock.o
                 0x20000038                g_xtal0Freq
@@ -3035,7 +3035,7 @@ LOAD linker stubs
  .debug_info    0x00000000      0xdc9 ./utilities/fsl_debug_console.o
  .debug_info    0x00000dc9      0xb80 ./utilities/fsl_str.o
  .debug_info    0x00001949      0xcfa ./startup/startup_mk64f12.o
- .debug_info    0x00002643       0xec ./source/Test.o
+ .debug_info    0x00002643       0xec ./source/main.o
  .debug_info    0x0000272f       0x3c ./source/semihost_hardfault.o
  .debug_info    0x0000276b     0x21e2 ./drivers/fsl_clock.o
  .debug_info    0x0000494d     0x1ed1 ./drivers/fsl_i2c.o
@@ -3085,7 +3085,7 @@ LOAD linker stubs
  .debug_abbrev  0x00000000      0x270 ./utilities/fsl_debug_console.o
  .debug_abbrev  0x00000270      0x270 ./utilities/fsl_str.o
  .debug_abbrev  0x000004e0      0x17a ./startup/startup_mk64f12.o
- .debug_abbrev  0x0000065a       0xa7 ./source/Test.o
+ .debug_abbrev  0x0000065a       0xa7 ./source/main.o
  .debug_abbrev  0x00000701       0x31 ./source/semihost_hardfault.o
  .debug_abbrev  0x00000732      0x378 ./drivers/fsl_clock.o
  .debug_abbrev  0x00000aaa      0x392 ./drivers/fsl_i2c.o
@@ -3139,7 +3139,7 @@ LOAD linker stubs
  .debug_aranges
                 0x00000160      0x330 ./startup/startup_mk64f12.o
  .debug_aranges
-                0x00000490       0x20 ./source/Test.o
+                0x00000490       0x20 ./source/main.o
  .debug_aranges
                 0x000004b0       0x20 ./source/semihost_hardfault.o
  .debug_aranges
@@ -3233,7 +3233,7 @@ LOAD linker stubs
  .debug_ranges  0x00000000       0x98 ./utilities/fsl_debug_console.o
  .debug_ranges  0x00000098       0xd8 ./utilities/fsl_str.o
  .debug_ranges  0x00000170      0x320 ./startup/startup_mk64f12.o
- .debug_ranges  0x00000490       0x10 ./source/Test.o
+ .debug_ranges  0x00000490       0x10 ./source/main.o
  .debug_ranges  0x000004a0       0x10 ./source/semihost_hardfault.o
  .debug_ranges  0x000004b0      0x1e8 ./drivers/fsl_clock.o
  .debug_ranges  0x00000698      0x170 ./drivers/fsl_i2c.o
@@ -3313,15 +3313,15 @@ LOAD linker stubs
  .debug_macro   0x00012aba      0x1c7 ./utilities/fsl_str.o
  .debug_macro   0x00012c81       0x56 ./utilities/fsl_str.o
  .debug_macro   0x00012cd7       0x29 ./startup/startup_mk64f12.o
- .debug_macro   0x00012d00      0x1ae ./source/Test.o
- .debug_macro   0x00012eae       0xd8 ./source/Test.o
- .debug_macro   0x00012f86       0x22 ./source/Test.o
- .debug_macro   0x00012fa8       0x16 ./source/Test.o
- .debug_macro   0x00012fbe       0x16 ./source/Test.o
- .debug_macro   0x00012fd4       0x16 ./source/Test.o
- .debug_macro   0x00012fea      0x1ab ./source/Test.o
- .debug_macro   0x00013195      0x1ce ./source/Test.o
- .debug_macro   0x00013363       0x16 ./source/Test.o
+ .debug_macro   0x00012d00      0x1ae ./source/main.o
+ .debug_macro   0x00012eae       0xd8 ./source/main.o
+ .debug_macro   0x00012f86       0x22 ./source/main.o
+ .debug_macro   0x00012fa8       0x16 ./source/main.o
+ .debug_macro   0x00012fbe       0x16 ./source/main.o
+ .debug_macro   0x00012fd4       0x16 ./source/main.o
+ .debug_macro   0x00012fea      0x1ab ./source/main.o
+ .debug_macro   0x00013195      0x1ce ./source/main.o
+ .debug_macro   0x00013363       0x16 ./source/main.o
  .debug_macro   0x00013379       0x11 ./source/semihost_hardfault.o
  .debug_macro   0x0001338a      0x1d8 ./drivers/fsl_clock.o
  .debug_macro   0x00013562      0x121 ./drivers/fsl_i2c.o
@@ -3344,7 +3344,7 @@ LOAD linker stubs
  .debug_line    0x00000000      0x7c2 ./utilities/fsl_debug_console.o
  .debug_line    0x000007c2      0xa98 ./utilities/fsl_str.o
  .debug_line    0x0000125a      0xa99 ./startup/startup_mk64f12.o
- .debug_line    0x00001cf3      0x446 ./source/Test.o
+ .debug_line    0x00001cf3      0x446 ./source/main.o
  .debug_line    0x00002139       0x59 ./source/semihost_hardfault.o
  .debug_line    0x00002192     0x14ac ./drivers/fsl_clock.o
  .debug_line    0x0000363e     0x1389 ./drivers/fsl_i2c.o
@@ -3397,7 +3397,7 @@ LOAD linker stubs
                               0x7ac8c (size before relaxing)
  .debug_str     0x0007cac8      0x7fd ./startup/startup_mk64f12.o
                                0x372b (size before relaxing)
- .debug_str     0x0007d2c5     0x1612 ./source/Test.o
+ .debug_str     0x0007d2c5     0x1612 ./source/main.o
                               0x7bf13 (size before relaxing)
  .debug_str     0x0007e8d7       0x1f ./source/semihost_hardfault.o
                                0x2eb3 (size before relaxing)
@@ -3493,7 +3493,7 @@ LOAD linker stubs
                                  0x46 (size before relaxing)
  .comment       0x00000045       0x46 ./utilities/fsl_str.o
  .comment       0x00000045       0x46 ./startup/startup_mk64f12.o
- .comment       0x00000045       0x46 ./source/Test.o
+ .comment       0x00000045       0x46 ./source/main.o
  .comment       0x00000045       0x46 ./source/semihost_hardfault.o
  .comment       0x00000045       0x46 ./drivers/fsl_clock.o
  .comment       0x00000045       0x46 ./drivers/fsl_i2c.o
@@ -3548,7 +3548,7 @@ LOAD linker stubs
  .ARM.attributes
                 0x00000068       0x34 ./startup/startup_mk64f12.o
  .ARM.attributes
-                0x0000009c       0x34 ./source/Test.o
+                0x0000009c       0x34 ./source/main.o
  .ARM.attributes
                 0x000000d0       0x34 ./source/semihost_hardfault.o
  .ARM.attributes
@@ -3644,7 +3644,7 @@ LOAD linker stubs
  .debug_frame   0x00000000      0x2d4 ./utilities/fsl_debug_console.o
  .debug_frame   0x000002d4      0x32c ./utilities/fsl_str.o
  .debug_frame   0x00000600      0x8fc ./startup/startup_mk64f12.o
- .debug_frame   0x00000efc       0x2c ./source/Test.o
+ .debug_frame   0x00000efc       0x2c ./source/main.o
  .debug_frame   0x00000f28       0x20 ./source/semihost_hardfault.o
  .debug_frame   0x00000f48      0x890 ./drivers/fsl_clock.o
  .debug_frame   0x000017d8      0x694 ./drivers/fsl_i2c.o
@@ -3740,15 +3740,15 @@ BOARD_BootClockRUN                                ./board/clock_config.o
 BOARD_BootClockVLPR                               ./board/clock_config.o
 BOARD_InitACCELPins                               ./board/pin_mux.o
 BOARD_InitBootClocks                              ./board/clock_config.o
-                                                  ./source/Test.o
+                                                  ./source/main.o
 BOARD_InitBootPeripherals                         ./board/peripherals.o
-                                                  ./source/Test.o
+                                                  ./source/main.o
 BOARD_InitBootPins                                ./board/pin_mux.o
-                                                  ./source/Test.o
+                                                  ./source/main.o
 BOARD_InitButtonsPins                             ./board/pin_mux.o
 BOARD_InitDEBUG_UARTPins                          ./board/pin_mux.o
 BOARD_InitDebugConsole                            ./board/board.o
-                                                  ./source/Test.o
+                                                  ./source/main.o
 BOARD_InitENETPins                                ./board/pin_mux.o
 BOARD_InitLEDsPins                                ./board/pin_mux.o
 BOARD_InitOSCPins                                 ./board/pin_mux.o
@@ -3874,7 +3874,7 @@ DbgConsole_Getchar                                ./utilities/fsl_debug_console.
 DbgConsole_Init                                   ./utilities/fsl_debug_console.o
                                                   ./board/board.o
 DbgConsole_Printf                                 ./utilities/fsl_debug_console.o
-                                                  ./source/Test.o
+                                                  ./source/main.o
 DbgConsole_Putchar                                ./utilities/fsl_debug_console.o
 DbgConsole_ReadCharacter                          ./utilities/fsl_debug_console.o
 DbgConsole_ReadLine                               ./utilities/fsl_debug_console.o
@@ -4369,7 +4369,7 @@ ispunct                                           d:/nxp/mcuxpressoide_11.9.0_21
 isspace                                           d:/nxp/mcuxpressoide_11.9.0_2144/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.9.0.202307121226/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(ctype.o)
 isupper                                           d:/nxp/mcuxpressoide_11.9.0_2144/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.9.0.202307121226/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(ctype.o)
 isxdigit                                          d:/nxp/mcuxpressoide_11.9.0_2144/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.9.0.202307121226/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(ctype.o)
-main                                              ./source/Test.o
+main                                              ./source/main.o
                                                   d:/nxp/mcuxpressoide_11.9.0_2144/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.9.0.202307121226/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_nohost_nf.a(_cr__main.o)
 malloc                                            d:/nxp/mcuxpressoide_11.9.0_2144/ide/plugins/com.nxp.mcuxpresso.tools.win32_11.9.0.202307121226/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard\libcr_c.a(alloc.o)
                                                   ./drivers/fsl_common.o
