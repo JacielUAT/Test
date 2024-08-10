@@ -22,11 +22,40 @@ En este proyecto se implementara un reloj con alarma y cronómetro, mediante el 
 <!-- Para crear un índice -->
 
 ### Requerimientos
-El sistema tendrá las siguientes funcionalidades:
+1. El sistema tendrá las siguientes funcionalidades:
 * Hora (horas, minutos y segundos)
 * Cronómetro (minutos, segundo y milisegundos, con una resolución de 25 milisegundos)
 * Alarma
-  
+
+#### Hora
+2. Un tarea de segundos, deberá activarse cada 1 segundo, para incrementar un contador local y enviar el valor a la tarea de mostrar la hora.
+3. Una tarea de minutos, se sincronizara con la tarea de segundo, incrementando el contador local de minutos.
+4. Una tarea de horas, se sincronizará con la tarea de minutos, incrementando el contador local de horas.
+5. Las variables usadas para llevar la cuenta de segundo, minutos y horas, deberán ser locales a la tarea que lleve a cabo su cuenta.
+6. El paso de la información entre las tareas de segundos, minutos y horas y la de mostrar la hora, se hará utilizando un solo canal de comunicación.
+7. Una tarea de mostrar la hora cada vez que se modifique el valor de segundo, minuto u hora.
+8. La hora (horas, minutos y segundos) sera mostrada a través de una pantalla LCD 84x48, en los renglones 2 o 3 de LCD.
+
+#### Alarma
+9. Una tarea para mostrar la alarma, la cual tendrá un valor de tiempo establecido para la alarma, con el cual, cuando coincida con el contador del reloj, se deberá mostrar en la pantalla
+LCD el mensaje de ALARMA, en los renglones 4 o 5 del LCD.
+10. Mientras la alarma este activada, se debe mostrar tanto el mensaje de ALARMA como la hora.
+11. Mientras la alarma este activa, se deberá encender y apagar los LEDs de la pantalla LCD, en un intervalo de 1 segundo, hasta que la alarma se desactive.
+12. Para desactivar la alarma, se hará mediante la pulsación del SW2 de la FRDM-K64F.
+13. La detección de la pulsación del SW2 se hará mediante interrupción.
+14. El valor de la alarma, se deberá poder modificar, mediante el acceso por UDP al sistema, a través del puerto 49.
+#### Cronómetro
+15. Una tarea para cronómetro
+16. Al estar en el modo reloj, y presionar el SW3, el sistema deberá pasar al modo cronómetro, en modo espera para ser iniciado.
+17. Mientras se esta en modo cronómetro, se deberá mostrar tanto la hora (renglo 1 o 2) como el cronómetro (3 o 4) en el LCD.
+18. En dado caso de activarse la alarma, estando en el modo cronómetro, se mostrará el mensaje de ALARMA en los renglones 5 o 6 del LCD. Para desactivar la alarma, sera necesario pasar
+a modo reloj.
+19. El cronómetro, al pasar del modo reloj al modo cronómetro, se reiniciara a 0 todos los contadores.
+20. Al estar en modo cronómetro, y presionar el SW2, el cronómetro iniciará el conteo.
+21. Estando el cronómetro en modo conteo, si se presiona el SW2, el cronómetro se detendrá, y mantendrá la cuenta.
+22. Si se presiona nuevamente el SW2, después de detener el conteo del cronómetro, esta iniciara nuevamente el conteo, desde el valor que se quedo en el conteo pasado.
+23. Para regresar al modo reloj, se presionara el SW3, pero solo deberá actuar cuando el cronómetro esta detenido.
+    
 ## Materiales
 A continuación, se presenta los difentes componenete utilizados para dar solución a los solicitado por el proyecto de RTOS.
 
@@ -175,7 +204,9 @@ Por otro lado, para saber si el conometro está en pausa o activo se utilizó un
 Para la sincronización de las tareas se utilizaron los siguientes semáforos:
 |Semáforo|Task-xSemaphoreTake|Task-xSemaphoreGive|
 |:--------:|:--------:|:--------:|
-|semMINUTES|update_minutes|:--------:|
+|semMINUTES|update_minutes|update_seconds|Este semáforo es utilizado para incrementar los minutos.
+|semHOURS|update_hours|update_minutes|Este semáforo es utilizado para incrementar las horas.
+
 ### Colas.
 La tarea reloj es la encargada de desplegar la información del reloj y cononmetro, por lo anterior de utilizó una cola ```xQueue``` en la cual las tareas ```update_hours, update_minutes, update_seconds, cronometer``` guardan información de sus tiempos, y la tarea ```timer``` saca información de la cola, esta información contiene el ```source``` que indica que tarea lo escribio y ```value``` y el valor (horas, segundos, minutos, milisegundos```, esto nos permite usar una misma cola donde puede escribir diferentes tareas.
 
