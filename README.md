@@ -47,16 +47,127 @@ En la siguiente tabla se muestra el hardware utilizado.
 ## Enfoque propuesto.
 ### Configuración de FreeRTOS
 La configuración utilizada en FreeRTOS es la siguiente-
-```swift
-colocar configuración de FreeRTOS
-}
+```#define configUSE_PREEMPTION                    1
+#define configUSE_TICKLESS_IDLE                 0
+#define configCPU_CLOCK_HZ                      (SystemCoreClock)
+#define configTICK_RATE_HZ                      ((TickType_t)1000)
+#define configMAX_PRIORITIES                    18
+#define configMINIMAL_STACK_SIZE                ((unsigned short)90)
+#define configMAX_TASK_NAME_LEN                 13
+#define configUSE_16_BIT_TICKS                  0
+#define configIDLE_SHOULD_YIELD                 1
+#define configUSE_TASK_NOTIFICATIONS            1
+#define configUSE_MUTEXES                       1
+#define configUSE_RECURSIVE_MUTEXES             1
+#define configUSE_COUNTING_SEMAPHORES           1
+#define configUSE_ALTERNATIVE_API               0 /* Deprecated! */
+#define configQUEUE_REGISTRY_SIZE               8
+#define configUSE_QUEUE_SETS                    0
+#define configUSE_TIME_SLICING                  1
+#define configUSE_NEWLIB_REENTRANT              0
+#define configENABLE_BACKWARD_COMPATIBILITY     0
+#define configNUM_THREAD_LOCAL_STORAGE_POINTERS 5
+#define configUSE_APPLICATION_TASK_TAG          0
 
+/* Used memory allocation (heap_x.c) */
+#define configFRTOS_MEMORY_SCHEME               3
+/* Tasks.c additions (e.g. Thread Aware Debug capability) */
+#define configINCLUDE_FREERTOS_TASK_C_ADDITIONS_H 1
+
+/* Memory allocation related definitions. */
+#define configSUPPORT_STATIC_ALLOCATION         0
+#define configSUPPORT_DYNAMIC_ALLOCATION        1
+/*#define configTOTAL_HEAP_SIZE                   0  not used by heap_3.c allocator */
+#define configAPPLICATION_ALLOCATED_HEAP        0
+
+/* Hook function related definitions. */
+#define configUSE_IDLE_HOOK                     0
+#define configUSE_TICK_HOOK                     0
+#define configCHECK_FOR_STACK_OVERFLOW          0
+#define configUSE_MALLOC_FAILED_HOOK            0
+#define configUSE_DAEMON_TASK_STARTUP_HOOK      0
+
+/* Run time and task stats gathering related definitions. */
+#define configGENERATE_RUN_TIME_STATS           0
+#define configUSE_TRACE_FACILITY                1
+#define configUSE_STATS_FORMATTING_FUNCTIONS    1
+
+/* Co-routine related definitions. */
+#define configUSE_CO_ROUTINES                   0
+#define configMAX_CO_ROUTINE_PRIORITIES         2
+
+/* Software timer related definitions. */
+#define configUSE_TIMERS                        1
+#define configTIMER_TASK_PRIORITY               17
+#define configTIMER_QUEUE_LENGTH                10
+#define configTIMER_TASK_STACK_DEPTH            (configMINIMAL_STACK_SIZE * 2)
+
+/* Define to trap errors during development. */
+#define configASSERT(x) if((x) == 0) {taskDISABLE_INTERRUPTS(); for (;;);}
+
+/* Optional functions - most linkers will remove unused functions anyway. */
+#define INCLUDE_vTaskPrioritySet                1
+#define INCLUDE_uxTaskPriorityGet               1
+#define INCLUDE_vTaskDelete                     1
+#define INCLUDE_vTaskSuspend                    1
+#define INCLUDE_vTaskDelayUntil                 1
+#define INCLUDE_vTaskDelay                      1
+#define INCLUDE_xTaskGetSchedulerState          1
+#define INCLUDE_xTaskGetCurrentTaskHandle       1
+#define INCLUDE_uxTaskGetStackHighWaterMark     0
+#define INCLUDE_xTaskGetIdleTaskHandle          0
+#define INCLUDE_eTaskGetState                   0
+#define INCLUDE_xTimerPendFunctionCall          1
+#define INCLUDE_xTaskAbortDelay                 0
+#define INCLUDE_xTaskGetHandle                  0
+#define INCLUDE_xTaskResumeFromISR              1
+
+```
+### Configuración del DSPI
+```
+dspi_master_config_t masterConfig;
+masterConfig.whichCtar                                = kDSPI_Ctar0;
+masterConfig.ctarConfig.baudRate                      = baudrate;
+masterConfig.ctarConfig.bitsPerFrame                  = 8U;
+masterConfig.ctarConfig.cpol                          = kDSPI_ClockPolarityActiveHigh;
+masterConfig.ctarConfig.cpha                          = kDSPI_ClockPhaseFirstEdge;
+masterConfig.ctarConfig.direction                     = kDSPI_MsbFirst;
+masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = 1000000000U / baudrate;
+masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = 1000000000U / baudrate;
+masterConfig.ctarConfig.betweenTransferDelayInNanoSec = 1000000000U / baudrate;
+masterConfig.whichPcs           = kDSPI_Pcs0;
+masterConfig.pcsActiveHighOrLow = kDSPI_PcsActiveLow;
+
+masterConfig.enableContinuousSCK        = false;
+masterConfig.enableRxFifoOverWrite      = false;
+masterConfig.enableModifiedTimingFormat = false;
+masterConfig.samplePoint                = kDSPI_SckToSin0Clock;
+uint8_t error = 0;
+uint32_t srcClock_Hz = CLOCK_GetFreq(DSPI0_CLK_SRC);
+DSPI_MasterInit(SPI0, &masterConfig, srcClock_Hz);
+DSPI_MasterTransferCreateHandle(SPI0, &rtosDSPI_handles[0].dspiHandle, rtosDSPI_callback, NULL);
+```
 ### Tareas y configuración.
 A continuación se describen las tareas utilizadas para el enfoque propuesto.
 En la siguiente tabla se muestra el hardware utilizado.
-|Nombre de Tarea|Nota|Prioridad|Stack|Parámetro|Descripción|
-|udpecho_thread|:--------:|:--------:|:--------:|:--------:|:--------:|
-|||:--------:|:--------:|:--------:|:--------:|
+
+|Nombre de Tarea|Nota|Stack size|Parámetro|Prioridad|Descripción|
+|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
+|udpecho_thread|udpecho_thread|DEFAULT|NULL|DEFAULT|Tarea encargada de recibir la información de la nueva alarma, através de una comunicación UPD|
+|taskInit|Init DSPI|100|NULL|4|NULL|Tarea encargada de inicializar el períferico de salida DSPI0 para la comunicación de la pantalla Nokia LCD|
+|update_hours|Update hour|100|NULL|2|Tarea encargada de contabilizar las horas transcurridas|
+|update_minutes|Update minutes|100|NULL|2|Tarea encargada de contabilizar los minutos transcurridos|
+|update_seconds|Update seconds|100|NULL|2|Tarea encargada de contabilizar los segundos transcurridos|
+|timer|Reloj|350|NULL|2|Tarea encargada de recibir la información de los minutos, segundos, horas y conómetro y enviar la información a desplegarce a la LCD por medio del DSPI0|
+|alarm|Alarma|350|(void *)dspi_msg|3|Tarea encargada de activa la alarma| 
+|cronometer|Cronometro|250|NULL|1|Tarea encargada de contabilizar los minutos, segundos y milisegundos del conómetro. 
+### Mutex
+En la siguiente tabla se muestras los mutex utilizados, así como la descripción de su uso.
+|Mutex|Descrición
+|:--------:|:--------:|
+|mutexTX/mutexPRINT|Estos mutex fueron utilizados para proteger el recurso del DSPI0 al momento de enviar información a la LCD.
+||
+### Grupos de eventos
 
 ### Semáforos binarios.
 Para la sincronización de las 
