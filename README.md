@@ -172,11 +172,14 @@ Para la activación de la alarma se utilizó un grupo de eventos evenGroupAlarm 
 Por otro lado, para saber si el conometro está en pausa o activo se utilizó un cuarto ```TIME_CRONOMETER_BIT``` que nos permite saber el último estado del cronometro (Pausa o coteo). Esto pasa saber que hacer cuando la interrupción del SW2 ocurre.
 
 ### Semáforos binarios.
-Para la sincronización de las tareas se utilizaron los siguientes semafo
-
+Para la sincronización de las tareas se utilizaron los siguientes semáforos:
+|Semáforo|Task-xSemaphoreTake|Task-xSemaphoreGive|
+|:--------:|:--------:|:--------:|
+|semMINUTES|update_minutes|:--------:|
 ### Colas.
 La tarea reloj es la encargada de desplegar la información del reloj y cononmetro, por lo anterior de utilizó una cola ```xQueue``` en la cual las tareas ```update_hours, update_minutes, update_seconds, cronometer``` guardan información de sus tiempos, y la tarea ```timer``` saca información de la cola, esta información contiene el ```source``` que indica que tarea lo escribio y ```value``` y el valor (horas, segundos, minutos, milisegundos```, esto nos permite usar una misma cola donde puede escribir diferentes tareas.
 
+![Procesos de la Queue](/image/queueRTOS.png)
 
 ## Installation
 Clonar el repositorio, luego en una terminal ejecutar `pod install` para instalar las dependencias del proyecto. Por último abrir `NAME.xcworkspace` y compilar la App.
