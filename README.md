@@ -57,7 +57,7 @@ a modo reloj.
 23. Para regresar al modo reloj, se presionara el SW3, pero solo deberá actuar cuando el cronómetro esta detenido.
     
 ## Materiales
-A continuación, se presenta los difentes componenete utilizados para dar solución a los solicitado por el proyecto de RTOS.
+A continuación, se presenta los diferentes componenete utilizados para dar solución al proyecto de RTOS solcitado.
 
 ### Software
 En la siguiente tabla se muestra el software utilizado para implementación de proyecto solicitado.
@@ -178,7 +178,6 @@ DSPI_MasterTransferCreateHandle(SPI0, &rtosDSPI_handles[0].dspiHandle, rtosDSPI_
 ```
 ### Tareas y configuración.
 A continuación se describen las tareas utilizadas para el enfoque propuesto.
-En la siguiente tabla se muestra el hardware utilizado.
 
 |Nombre de Tarea|Nota|Stack size|Parámetro|Prioridad|Descripción|
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
@@ -208,7 +207,7 @@ Para la sincronización de las tareas se utilizaron los siguientes semáforos:
 |semHOURS|update_hours|update_minutes|Este semáforo es utilizado para incrementar las horas.
 
 ### Colas.
-La tarea reloj es la encargada de desplegar la información del reloj y cononmetro, por lo anterior de utilizó una cola ```xQueue``` en la cual las tareas ```update_hours, update_minutes, update_seconds, cronometer``` guardan información de sus tiempos, y la tarea ```timer``` saca información de la cola, esta información contiene el ```source``` que indica que tarea lo escribio y ```value``` y el valor (horas, segundos, minutos, milisegundos```, esto nos permite usar una misma cola donde puede escribir diferentes tareas.
+La tarea reloj es la encargada de desplegar la información del reloj y del conónmetro, por lo anterior de utilizó una cola ```xQueue``` en la cual las tareas ```update_hours, update_minutes, update_seconds, cronometer``` guardan información de sus tiempos. La tarea ```timer``` saca la información de la cola, donde cada valor es una estructura con la siguiente información; el ```source``` que indica la tarea que agregó dicha estructura y ```value``` que se refiere al valor de horas, segundos, minutos, milisegundos sea el caso, esto nos permite usar un mismo medio de comunicación donde puede escribir diferentes tareas.
 
 ![Procesos de la Queue](/image/queueRTOS.png)
 
