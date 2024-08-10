@@ -167,16 +167,15 @@ En la siguiente tabla se muestras los mutex utilizados, así como la descripció
 |:--------:|:--------:|
 |mutexTX/mutexPRINT|Estos mutex fueron utilizados para proteger el recurso del DSPI0 al momento de enviar información a la LCD.
 ### Grupos de eventos
-Para la activación de la alarma se utilizó un grupo de eventos evenGroupAlarm con los siguientes bits que se activan la hora seteada en la alarma es igual a la hora del reloj.
-```
-#define TIME_ALARM_BIT_SEG (1<<0)
-#define TIME_ALARM_BIT_MIN (1<<1)
-#define TIME_ALARM_BIT_HRS (1<<2)
-```
-Por otro lado, para saber si el conometro está en pausa o activo se utilizó un cuarto ``` TIME_CRONOMETER_BIT``` que nos permite saber el último estado del cronometro (Pausa o coteo). Esto pasa saber que hacer cuando la interrupción del SW2 ocurre.
-### Semáforos binarios.
-Para la sincronización de las 
+Para la activación de la alarma se utilizó un grupo de eventos evenGroupAlarm con los siguientes bits que se activan la hora seteada en la alarma es igual a la hora del reloj: ``` #define TIME_ALARM_BIT_SEG (1<<0),  #define TIME_ALARM_BIT_MIN (1<<1), #define TIME_ALARM_BIT_HRS (1<<2) ```
 
+Por otro lado, para saber si el conometro está en pausa o activo se utilizó un cuarto ```TIME_CRONOMETER_BIT``` que nos permite saber el último estado del cronometro (Pausa o coteo). Esto pasa saber que hacer cuando la interrupción del SW2 ocurre.
+
+### Semáforos binarios.
+Para la sincronización de las tareas se utilizaron los siguientes semafo
+
+### Colas.
+La tarea reloj es la encargada de desplegar la información del reloj y cononmetro, por lo anterior de utilizó una cola ```xQueue``` en la cual las tareas ```update_hours, update_minutes, update_seconds, cronometer``` guardan información de sus tiempos, y la tarea ```timer``` saca información de la cola, esta información contiene el ```source``` que indica que tarea lo escribio y ```value``` y el valor (horas, segundos, minutos, milisegundos```, esto nos permite usar una misma cola donde puede escribir diferentes tareas.
 
 
 ## Installation
