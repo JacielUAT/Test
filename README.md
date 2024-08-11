@@ -200,7 +200,7 @@ Para la activación de la alarma se utilizó un grupo de eventos evenGroupAlarm 
 Por otro lado, para saber si el conometro está en pausa o activo se utilizó un cuarto ```TIME_CRONOMETER_BIT``` que nos permite saber el último estado del cronometro (Pausa o coteo). Esto pasa saber que hacer cuando la interrupción del SW2 ocurre.
 
 ### Semáforos binarios.
-Para la sincronización de las tareas se utilizaron los siguientes semáforos:
+En la siguiente tabla se muestran los semáforos bínarios para la sincronización de tareas, se puede apreciar el nombre del semáforo, así como la tarea que toma el semáforo y la tarea que lo libera:
 |Semáforo|Task-xSemaphoreTake|Task-xSemaphoreGive|
 |:--------:|:--------:|:--------:|
 |semMINUTES|update_minutes|update_seconds|Este semáforo es utilizado para incrementar los minutos.
@@ -210,6 +210,14 @@ Para la sincronización de las tareas se utilizaron los siguientes semáforos:
 La tarea reloj es la encargada de desplegar la información del reloj y del conónmetro, por lo anterior de utilizó una cola ```xQueue``` en la cual las tareas ```update_hours, update_minutes, update_seconds, cronometer``` guardan información de sus tiempos. La tarea ```timer``` saca la información de la cola, donde cada valor es una estructura con la siguiente información; el ```source``` que indica la tarea que agregó dicha estructura y ```value``` que se refiere al valor de horas, segundos, minutos, milisegundos sea el caso, esto nos permite usar un mismo medio de comunicación donde puede escribir diferentes tareas.
 
 ![Procesos de la Queue](/image/queueRTOS.png)
+
+### Máquina de estado para la implementación del reloj.
+A continuación, se presenta la lógica en forma de máquina de estados que sigue la implementación del reloj. Para el requerimiento del reloj, se utilizaron 4 tareas ```update_hours, update_minutes, update_seconds y timer``` que utilizan el tiempo de segundos, los semáforos binarios ``` semMINUTES y semHOURS ``` y la cola ```xQueue``` donde se guarda la información de las horas, segundos y milesegundos.
+
+Para el funcionamiento del reloj 
+
+
+## Resultados
 
 ## Installation
 Clonar el repositorio, luego en una terminal ejecutar `pod install` para instalar las dependencias del proyecto. Por último abrir `NAME.xcworkspace` y compilar la App.
