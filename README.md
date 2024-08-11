@@ -1,7 +1,7 @@
 
 <!-- Para abrir el preview en Atom: ^ (control) + shift + M -->
 
-# Proyecto final del curso de Sistemas operativos en tiempo Real.
+# Proyecto final del curso de sistemas operativos en tiempo real.
 [![platform][License]][License]
 
 ## Table of Contents
