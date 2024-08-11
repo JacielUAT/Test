@@ -224,7 +224,7 @@ Para el alarma se utilizó un grupo de eventos ```evenGroupAlarm``` que contiene
 ![Proceso de la alarm](/image/st_alarma.png)
 
 Un requerimiento para esta funcionalidad es agregar una nueva alarma (hh:mm:ss) desde un conexión UDP usando el puerto 49, para dar solución a este requerimiento se cuenta con la tarea ```udpecho_thread``` la cual permite captura la información de una nueva alarma que se envia por medio de una conexión UPD, actualizando la hora, minutos y segundo de la nueva alarma. Para asignar una nueva alarma se programó un script de python que abre un socket entre una computadora y la tarjeta K64 y envia la información de la nueva alarma. A continuación, se muestra el script desarrollado en python.
-```swift
+```python
 import socket
 UDP_IP = "192.168.0.102"
 UDP_PORT = 49
