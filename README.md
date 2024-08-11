@@ -213,6 +213,7 @@ La tarea reloj es la encargada de desplegar la información del reloj y del con�
 
 ### Máquina de estado para la implementación del reloj.
 A continuación, se presenta la lógica en forma de máquina de estados que sigue la implementación del reloj. Para el requerimiento del reloj, se utilizaron 4 tareas ```update_hours, update_minutes, update_seconds y timer``` que utilizan el tiempo de segundos, los semáforos binarios ``` semMINUTES y semHOURS ``` y la cola ```xQueue``` donde se guarda la información de las horas, segundos y milesegundos.
+![Procesos de la Queue](/image/st_reloj.png)
 
 Para el funcionamiento del reloj 
 
