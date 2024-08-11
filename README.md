@@ -76,7 +76,8 @@ En la siguiente tabla se muestra el hardware utilizado.
 ## Enfoque propuesto.
 ### Configuración de FreeRTOS
 La configuración utilizada en FreeRTOS es la siguiente-
-```#define configUSE_PREEMPTION                    1
+```C
+#define configUSE_PREEMPTION                    1
 #define configUSE_TICKLESS_IDLE                 0
 #define configCPU_CLOCK_HZ                      (SystemCoreClock)
 #define configTICK_RATE_HZ                      ((TickType_t)1000)
@@ -153,7 +154,7 @@ La configuración utilizada en FreeRTOS es la siguiente-
 
 ```
 ### Configuración del DSPI
-```
+```C
 dspi_master_config_t masterConfig;
 masterConfig.whichCtar                                = kDSPI_Ctar0;
 masterConfig.ctarConfig.baudRate                      = baudrate;
