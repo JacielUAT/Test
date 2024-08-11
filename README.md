@@ -195,7 +195,7 @@ En la siguiente tabla se muestras los mutex utilizados, así como la descripció
 |:--------:|:--------:|
 |mutexTX/mutexPRINT|Estos mutex fueron utilizados para proteger el recurso del DSPI0 al momento de enviar información a la LCD.
 ### Grupos de eventos
-Para la activación de la alarma se utilizó un grupo de eventos evenGroupAlarm con los siguientes bits que se activan la hora seteada en la alarma es igual a la hora del reloj: ``` #define TIME_ALARM_BIT_SEG (1<<0),  #define TIME_ALARM_BIT_MIN (1<<1), #define TIME_ALARM_BIT_HRS (1<<2) ```
+Para la activación de la alarma se utilizó un grupo de eventos ```evenGroupAlarm``` con los siguientes bits que se activan la hora seteada en la alarma es igual a la hora del reloj: ``` #define TIME_ALARM_BIT_SEG (1<<0),  #define TIME_ALARM_BIT_MIN (1<<1), #define TIME_ALARM_BIT_HRS (1<<2) ```
 
 Por otro lado, para saber si el conometro está en pausa o activo se utilizó un cuarto ```TIME_CRONOMETER_BIT``` que nos permite saber el último estado del cronometro (Pausa o coteo). Esto pasa saber que hacer cuando la interrupción del SW2 ocurre.
 
@@ -211,21 +211,23 @@ La tarea reloj es la encargada de desplegar la información del reloj y del con�
 
 ![Procesos de la Queue](/image/queueRTOS.png)
 
-### Máquina de estado para la implementación del reloj.
+### Máquina de estado para ejecución de las tareas del reloj.
 A continuación, se presenta la lógica en forma de máquina de estados que sigue la implementación del reloj. Para el requerimiento del reloj, se utilizaron 4 tareas ```update_hours, update_minutes, update_seconds y timer``` que utilizan el tiempo de segundos, los semáforos binarios ``` semMINUTES y semHOURS ``` y la cola ```xQueue``` donde se guarda la información de las horas, segundos y milesegundos.
-![Procesos de la Queue](/image/st_reloj.png)
+![Proceso del Reloj](/image/st_reloj.png)
 
 Una vez que el calendarizador ejecuta la tarea ```timer``` este empieza a sacar información de la cola para mostrar en el display, puede mandar a mostrar información del reloj o del cronómetro. Al momento de enviar la información al display no es necesario realizar ninguna validación de si el cronómetro esta activo, ya que al momento que el conómetro no este activo nunca habrá en la información del cronómetro.
-![Procesos de la Queue](/image/st_reloj2.png)
+![Proceso del Reloj](/image/st_reloj3.png)
 
+### Máquina de estado para la ejecución de la tarea alarma.
+Para el alarma se utilizó un grupo de eventos ```evenGroupAlarm``` que contiene 3 bits para la alarma ```TIME_ALARM_BIT_SEG,TIME_ALARM_BIT_MIN, TIME_ALARM_BIT_HRS```. Cuando el calendarizador ejecuta la tarea ```alarm``` esta valida si los bits del grupo de eventos ```evenGroupAlarm``` están activos, si esto es cierto se muestra en el display la palabra ```ALARMA``` y el ```Backlight``` de la LCD nokia 5110 preden y apaga cada 1 segundo.
 
+![Proceso de la alarm](/image/st_alarma.png)
+### Máquina de estado para la ejecución de la cronómetro.
+Para la ejecución de la tarea de cronómetro se tiene la siguiente lógica, donde una vez que el calendarizador ejecuta la tarea de cronómetro este valida si el bit TIME_CRONOMETER_BIT en el grupo de eventos ```evenGroupAlarm``` esta activo, si esto es cierto, la empieza a contar el tiempo del cronómetro y enviar la información a la cola ```xQueue```.
+![Proceso del cronometro](/image/st_cronometer.png)
 ## Resultados
 
-## Installation
-Clonar el repositorio, luego en una terminal ejecutar `pod install` para instalar las dependencias del proyecto. Por último abrir `NAME.xcworkspace` y compilar la App.
 
-## Download
-App disponible en [iTunes][AppStore] para su descarga.
 
 ## Author
 Matías Correnti, [@matCorrenti][myTwitter].
