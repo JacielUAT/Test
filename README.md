@@ -212,6 +212,28 @@ La tarea reloj es la encargada de desplegar la información del reloj y del con�
 
 ![Procesos de la Queue](/image/queueRTOS.png)
 
+### Manejo de interrupciones.
+De acuerdos a los requerimientos, se pide que manejo el control de la alarma y cronómetro por medio de interrupciones ISR. En concreto el SW2 y SW3 del k64. Por lo anterior, se realizó la siguiente configuración, así como su handlers.
+```python
+CLOCK_EnableClock(kCLOCK_PortA);
+CLOCK_EnableClock(kCLOCK_PortC);
+//SW3 CONFIGURATIONS
+PORT_SetPinConfig(PORTA, 4U, &porta10_pinM9_config);
+PORT_SetPinInterruptConfig(PORTA, 4, kPORT_InterruptFallingEdge);
+
+NVIC_SetPriority(PORTA_IRQn, 0x3);
+EnableIRQ(BOARD_SW_3_IRQ);
+GPIO_PinInit(GPIOA, 4, &sw_config);
+
+//SW2 CONFIGURATIONS
+PORT_SetPinConfig(PORTC, 6U, &porta10_pinM9_config);
+  PORT_SetPinInterruptConfig(PORTC, 6, kPORT_InterruptFallingEdge);
+
+NVIC_SetPriority(PORTC_IRQn, 0x3);
+EnableIRQ(BOARD_SW_2_IRQ);
+GPIO_PinInit(GPIOC, 6, &sw_config);
+```
+
 ### Máquina de estado para ejecución de las tareas del reloj.
 A continuación, se presenta la lógica en forma de máquina de estados que sigue la implementación del reloj. Para el requerimiento del reloj, se utilizaron 4 tareas ```update_hours, update_minutes, update_seconds y timer``` que utilizan el tiempo de segundos, los semáforos binarios ``` semMINUTES y semHOURS ``` y la cola ```xQueue``` donde se guarda la información de las horas, segundos y milesegundos.
 ![Proceso del Reloj](/image/st_reloj.png)
@@ -251,7 +273,21 @@ Para la ejecución de la tarea de cronómetro se tiene la siguiente lógica, don
 
 ![Proceso del cronometro](/image/st_cronometer.png)
 ### Máquina de estado para la manipulación del sistema.
-En los puntos anteriores se explicó la lógica para la ejecución de las tareas usando semáforos binarios, colas, mutex y grupos de eventos. Ahora para cumplir los 
+En los puntos anteriores se explicó la lógica para la ejecución de las tareas usando semáforos binarios, colas, mutex y grupos de eventos. Ahora para cumplir, la lógica para activar y quitar el crónometro, limpiar la alarma se debe de cumplir los siguietes requerimientos.
+1. Al iniciar el sistema, se inicia con el modo reloj.
+2. Estando en el modo reloj, si se activa la alarma se puede limipiar al presionar SW2.
+3. Si se presiona SW3 estando en modo reloj, se activa el modo cronómetro.
+4. Una vez activo el modo cronómetro, al presionar SW2 el tiempo del cronómetro empieza a contar y entra al modo conteo.
+5. Estando en modo conteo, si se presiona SW2 el cronómetro se para y pasa a modo Pausa.
+6. Estando en modo Pausa si se presiona SW2 el cronómetro continua en donde se quedó y pasa a modo conteó.
+7. Para regresar al modo reloj, se debe de estar en el modo pausa y presionar el SW3.
+5. Si la alarma se activa estando en modo conteo, pausa, cronómetro no se podrá limpiar, para limpiar se debe cumplir el punto 7 (regresar al modo relojo), el punto 2 (limpiar alarma).
+
+
+A continuación, se muestra la máquina de estados hecha para cumplir la lógica de los requerimientos.
+
+![Proceso funcionamiento](/image/st_funcionamiento.png)
+
 ## Resultados
 
 
