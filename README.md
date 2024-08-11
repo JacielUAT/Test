@@ -215,7 +215,8 @@ La tarea reloj es la encargada de desplegar la información del reloj y del con�
 A continuación, se presenta la lógica en forma de máquina de estados que sigue la implementación del reloj. Para el requerimiento del reloj, se utilizaron 4 tareas ```update_hours, update_minutes, update_seconds y timer``` que utilizan el tiempo de segundos, los semáforos binarios ``` semMINUTES y semHOURS ``` y la cola ```xQueue``` donde se guarda la información de las horas, segundos y milesegundos.
 ![Procesos de la Queue](/image/st_reloj.png)
 
-Para el funcionamiento del reloj 
+Una vez que el calendarizador ejecuta la tarea ```timer``` este empieza a sacar información de la cola para mostrar en el display, puede mandar a mostrar información del reloj o del cronómetro. Al momento de enviar la información al display no es necesario realizar ninguna validación de si el cronómetro esta activo, ya que al momento que el conómetro no este activo nunca habrá en la información del cronómetro.
+![Procesos de la Queue](/image/st_reloj2.png)
 
 
 ## Resultados
