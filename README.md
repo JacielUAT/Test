@@ -222,9 +222,22 @@ Una vez que el calendarizador ejecuta la tarea ```timer``` este empieza a sacar 
 Para el alarma se utilizó un grupo de eventos ```evenGroupAlarm``` que contiene 3 bits para la alarma ```TIME_ALARM_BIT_SEG,TIME_ALARM_BIT_MIN, TIME_ALARM_BIT_HRS```. Cuando el calendarizador ejecuta la tarea ```alarm``` esta valida si los bits del grupo de eventos ```evenGroupAlarm``` están activos, si esto es cierto se muestra en el display la palabra ```ALARMA``` y el ```Backlight``` de la LCD nokia 5110 preden y apaga cada 1 segundo.
 
 ![Proceso de la alarm](/image/st_alarma.png)
+
+Un requerimiento para esta funcionalidad es agregar una nueva alarma (hh:mm:ss) desde un conexión UDP usando el puerto 49, para dar solución a este requerimiento se cuenta con la tarea ```udpecho_thread``` la cual permite captura la información de una nueva alarma que se envia por medio de una conexión UPD, actualizando la hora, minutos y segundo de la nueva alarma. Para asignar una nueva alarma se programó un script de python que abre un socket entre una computadora y la tarjeta K64 y envia la información de la nueva alarma. A continuación, se muestra el script desarrollado en python.
+```swift
+func texto(texto: String = "default") {
+  //Comentario
+  let tex: String = "Python syntax highlighting"
+  let tex2: String = texto
+}
+```
+
 ### Máquina de estado para la ejecución de la cronómetro.
-Para la ejecución de la tarea de cronómetro se tiene la siguiente lógica, donde una vez que el calendarizador ejecuta la tarea de cronómetro este valida si el bit TIME_CRONOMETER_BIT en el grupo de eventos ```evenGroupAlarm``` esta activo, si esto es cierto, la empieza a contar el tiempo del cronómetro y enviar la información a la cola ```xQueue```.
+Para la ejecución de la tarea de cronómetro se tiene la siguiente lógica, donde una vez que el calendarizador ejecuta la tarea de cronómetro este valida si el bit TIME_CRONOMETER_BIT en el grupo de eventos ```evenGroupAlarm``` esta activo, si esto es cierto se empieza a contar el tiempo del cronómetro y enviar la información a la cola ```xQueue```.
+
 ![Proceso del cronometro](/image/st_cronometer.png)
+### Máquina de estado para la manipulación del sistema.
+En los puntos anteriores se explicó la lógica para la ejecución de las tareas usando semáforos binarios, colas, mutex y grupos de eventos. Ahora para cumplir los 
 ## Resultados
 
 
