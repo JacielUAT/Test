@@ -228,8 +228,7 @@ Un requerimiento para esta funcionalidad es agregar una nueva alarma (hh:mm:ss) 
 import socket
 UDP_IP = "192.168.0.102"
 UDP_PORT = 49
- 
-MESSAGE =b"23"
+
 alarm = input("¿Ingrese nueva alarma en el formato 00:00:00? ")
 alarm = alarm.replace(":","")
 print(alarm)
