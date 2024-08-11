@@ -225,11 +225,25 @@ Para el alarma se utilizó un grupo de eventos ```evenGroupAlarm``` que contiene
 
 Un requerimiento para esta funcionalidad es agregar una nueva alarma (hh:mm:ss) desde un conexión UDP usando el puerto 49, para dar solución a este requerimiento se cuenta con la tarea ```udpecho_thread``` la cual permite captura la información de una nueva alarma que se envia por medio de una conexión UPD, actualizando la hora, minutos y segundo de la nueva alarma. Para asignar una nueva alarma se programó un script de python que abre un socket entre una computadora y la tarjeta K64 y envia la información de la nueva alarma. A continuación, se muestra el script desarrollado en python.
 ```swift
-func texto(texto: String = "default") {
-  //Comentario
-  let tex: String = "Python syntax highlighting"
-  let tex2: String = texto
-}
+import socket
+UDP_IP = "192.168.0.102"
+UDP_PORT = 49
+ 
+MESSAGE =b"23"
+alarm = input("¿Ingrese nueva alarma en el formato 00:00:00? ")
+alarm = alarm.replace(":","")
+print(alarm)
+print("UDP target IP: %s" %UDP_IP)
+print("UDP target PORT: %s" %UDP_PORT)
+print("Message: %s" % alarm)
+ 
+sock = socket.socket(socket.AF_INET, # Internet
+					socket.SOCK_DGRAM) #UDP
+sock.connect((UDP_IP, UDP_PORT))
+sock.sendto(alarm.encode(), (UDP_IP,UDP_PORT)) #UDP
+ 
+data, addr = sock.recvfrom(1024)#
+print("receive message: %s" % data)
 ```
 
 ### Máquina de estado para la ejecución de la cronómetro.
