@@ -4,7 +4,7 @@
 # Proyecto final del curso de sistemas operativos en tiempo real.
 [![platform][License]][License]
 
-## Table of Contents
+## Tabla de contenido
 - [Introducción](#introducción)
 - [Requerimientos](#requerimientos)
 - [Materiales](#materiales)
