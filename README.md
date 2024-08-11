@@ -303,7 +303,8 @@ A continuación, se muestra la máquina de estados hecha para cumplir la lógica
 ![Proceso funcionamiento](/image/st_funcionamiento.png)
 
 ## Resultados
-
+A continuación, se presenta un video donde se explica el funcionamiento del sistemas, así como las funcionalidades que cubren que cubren los requerimientos del proyecto solicitado.
+[![YouTube](http://i.ytimg.com/vi/XzANA-5TDvc/hqdefault.jpg)](https://www.youtube.com/watch?v=XzANA-5TDvc)
 
 
 ## Autores
