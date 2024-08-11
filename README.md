@@ -5,17 +5,29 @@
 [![platform][License]][License]
 
 ## Table of Contents
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Download](#download)
-- [Author](#author)
-- [License](#license)
-- [Otros Ejemplos](#otros-ejemplos)
-  - [Bloques de códigos](#bloques-de-códigos)
-  - [Resaltar texto](#resaltar-texto)
-  - [Badges](#badges)
-  - [Imagen](#imagen)
-  - 
+- [Introducción](#introducción)
+- [Requerimientos](#requerimientos)
+- [Materiales](#materiales)
+  - [Software](#software)
+  - [Hardware](#hardware)
+- [Enfoque propuesto](#enfoque-propuesto)
+  - [Configuración de FreeRTOS](#configuración-de-freertos)
+  - [Configuración del DSPI](#configuración-del-dspi)
+  - [Tareas y configuración](#tareas-y-configuración)
+  - [Mutex](#mutex)
+  - [Grupos de eventos](#grupos-de-eventos)
+  - [Semáforos binarios](#semáforos-binarios)
+  - [QUEUE](#queue)
+  - [Manejo de interrupciones](#manejo-de-interrupciones)
+  - [Máquina de estado para la ejecución de las tareas del reloj](#máquina-de-estado-para-la-ejecución-de-las-tareas-del-reloj)
+  - [Máquina de estado para la ejecución de la tarea alarma](#máquina-de-estado-para-la-ejecución-de-la-tarea-alarma)
+  - [Máquina de estado para la ejecución de la tarea cronómetro](#máquina-de-estado-para-la-ejecución-de-la-tarea-cronómetro)
+  - [Máquina de estado para la manipulación del sistema](#máquina-de-estado-para-la-manipulación-del-sistema)
+- [Resultados](#resultados)
+- [Autores](#autores)
+
+
+
 ## Introducción
 ### Objetivo
 En este proyecto se implementara un reloj con alarma y cronómetro, mediante el uso de FreeRTOS, generando múltiples tareas y usando IPC para sincronizarlas.
@@ -73,7 +85,8 @@ En la siguiente tabla se muestra el hardware utilizado.
 |The Freedom-K64F|Freedom-K64F es una plataforma de desarrollo de costo ultrabajo para MCU Kinetis ® K64, K63 y K24.
 |Display nokia 5110|Dsiplay utilizado para mostrar el reloj, alarma y cronómetro.
 
-## Enfoque propuesto.
+## Enfoque propuesto
+
 ### Configuración de FreeRTOS
 La configuración utilizada en FreeRTOS es la siguiente-
 ```C
@@ -177,13 +190,13 @@ uint32_t srcClock_Hz = CLOCK_GetFreq(DSPI0_CLK_SRC);
 DSPI_MasterInit(SPI0, &masterConfig, srcClock_Hz);
 DSPI_MasterTransferCreateHandle(SPI0, &rtosDSPI_handles[0].dspiHandle, rtosDSPI_callback, NULL);
 ```
-### Tareas y configuración.
+### Tareas y configuración
 A continuación se describen las tareas utilizadas para el enfoque propuesto.
 
 |Nombre de Tarea|Nota|Stack size|Parámetro|Prioridad|Descripción|
 |:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
 |udpecho_thread|udpecho_thread|DEFAULT|NULL|DEFAULT|Tarea encargada de recibir la información de la nueva alarma, através de una comunicación UPD|
-|taskInit|Init DSPI|100|NULL|4|NULL|Tarea encargada de inicializar el períferico de salida DSPI0 para la comunicación de la pantalla Nokia LCD|
+|taskInit|Init DSPI|100|NULL|4|Tarea encargada de inicializar el períferico de salida DSPI0 para la comunicación de la pantalla Nokia LCD|
 |update_hours|Update hour|100|NULL|2|Tarea encargada de contabilizar las horas transcurridas|
 |update_minutes|Update minutes|100|NULL|2|Tarea encargada de contabilizar los minutos transcurridos|
 |update_seconds|Update seconds|100|NULL|2|Tarea encargada de contabilizar los segundos transcurridos|
@@ -200,21 +213,21 @@ Para la activación de la alarma se utilizó un grupo de eventos ```evenGroupAla
 
 Por otro lado, para saber si el conometro está en pausa o activo se utilizó un cuarto ```TIME_CRONOMETER_BIT``` que nos permite saber el último estado del cronometro (Pausa o coteo). Esto pasa saber que hacer cuando la interrupción del SW2 ocurre.
 
-### Semáforos binarios.
+### Semáforos binarios
 En la siguiente tabla se muestran los semáforos bínarios para la sincronización de tareas, se puede apreciar el nombre del semáforo, así como la tarea que toma el semáforo y la tarea que lo libera:
 |Semáforo|Task-xSemaphoreTake|Task-xSemaphoreGive|
 |:--------:|:--------:|:--------:|
 |semMINUTES|update_minutes|update_seconds|Este semáforo es utilizado para incrementar los minutos.
 |semHOURS|update_hours|update_minutes|Este semáforo es utilizado para incrementar las horas.
 
-### Colas.
+### QUEUE
 La tarea reloj es la encargada de desplegar la información del reloj y del conónmetro, por lo anterior de utilizó una cola ```xQueue``` en la cual las tareas ```update_hours, update_minutes, update_seconds, cronometer``` guardan información de sus tiempos. La tarea ```timer``` saca la información de la cola, donde cada valor es una estructura con la siguiente información; el ```source``` que indica la tarea que agregó dicha estructura y ```value``` que se refiere al valor de horas, segundos, minutos, milisegundos sea el caso, esto nos permite usar un mismo medio de comunicación donde puede escribir diferentes tareas.
 
 ![Procesos de la Queue](/image/queueRTOS.png)
 
-### Manejo de interrupciones.
+### Manejo de interrupciones
 De acuerdos a los requerimientos, se pide que manejo el control de la alarma y cronómetro por medio de interrupciones ISR. En concreto el SW2 y SW3 del k64. Por lo anterior, se realizó la siguiente configuración, así como su handlers.
-```python
+```C
 CLOCK_EnableClock(kCLOCK_PortA);
 CLOCK_EnableClock(kCLOCK_PortC);
 //SW3 CONFIGURATIONS
@@ -234,14 +247,14 @@ EnableIRQ(BOARD_SW_2_IRQ);
 GPIO_PinInit(GPIOC, 6, &sw_config);
 ```
 
-### Máquina de estado para ejecución de las tareas del reloj.
+### Máquina de estado para la ejecución de las tareas del reloj
 A continuación, se presenta la lógica en forma de máquina de estados que sigue la implementación del reloj. Para el requerimiento del reloj, se utilizaron 4 tareas ```update_hours, update_minutes, update_seconds y timer``` que utilizan el tiempo de segundos, los semáforos binarios ``` semMINUTES y semHOURS ``` y la cola ```xQueue``` donde se guarda la información de las horas, segundos y milesegundos.
 ![Proceso del Reloj](/image/st_reloj.png)
 
 Una vez que el calendarizador ejecuta la tarea ```timer``` este empieza a sacar información de la cola para mostrar en el display, puede mandar a mostrar información del reloj o del cronómetro. Al momento de enviar la información al display no es necesario realizar ninguna validación de si el cronómetro esta activo, ya que al momento que el conómetro no este activo nunca habrá en la información del cronómetro.
 ![Proceso del Reloj](/image/st_reloj3.png)
 
-### Máquina de estado para la ejecución de la tarea alarma.
+### Máquina de estado para la ejecución de la tarea alarma
 Para el alarma se utilizó un grupo de eventos ```evenGroupAlarm``` que contiene 3 bits para la alarma ```TIME_ALARM_BIT_SEG,TIME_ALARM_BIT_MIN, TIME_ALARM_BIT_HRS```. Cuando el calendarizador ejecuta la tarea ```alarm``` esta valida si los bits del grupo de eventos ```evenGroupAlarm``` están activos, si esto es cierto se muestra en el display la palabra ```ALARMA``` y el ```Backlight``` de la LCD nokia 5110 preden y apaga cada 1 segundo.
 
 ![Proceso de la alarm](/image/st_alarma.png)
@@ -268,11 +281,12 @@ data, addr = sock.recvfrom(1024)#
 print("receive message: %s" % data)
 ```
 
-### Máquina de estado para la ejecución de la cronómetro.
+### Máquina de estado para la ejecución de la tarea cronómetro
 Para la ejecución de la tarea de cronómetro se tiene la siguiente lógica, donde una vez que el calendarizador ejecuta la tarea de cronómetro este valida si el bit TIME_CRONOMETER_BIT en el grupo de eventos ```evenGroupAlarm``` esta activo, si esto es cierto se empieza a contar el tiempo del cronómetro y enviar la información a la cola ```xQueue```.
 
 ![Proceso del cronometro](/image/st_cronometer.png)
-### Máquina de estado para la manipulación del sistema.
+
+### Máquina de estado para la manipulación del sistema
 En los puntos anteriores se explicó la lógica para la ejecución de las tareas usando semáforos binarios, colas, mutex y grupos de eventos. Ahora para cumplir, la lógica para activar y quitar el crónometro, limpiar la alarma se debe de cumplir los siguietes requerimientos.
 1. Al iniciar el sistema, se inicia con el modo reloj.
 2. Estando en el modo reloj, si se activa la alarma se puede limipiar al presionar SW2.
@@ -292,85 +306,16 @@ A continuación, se muestra la máquina de estados hecha para cumplir la lógica
 
 
 
-## Author
-Matías Correnti, [@matCorrenti][myTwitter].
+## Autores
+Dr. Jaciel David Hernández Reséndiz, jacieldavidhernandez@gmail.com/jaciel.hernandez@cinvestav.mx
+
+Mtr. Julio César García Méndez, jc.garcia@cinvestav.mx 
 
 ## License
 README is available under the MIT license. See the [LICENSE](LICENSE) file for more info.
 
 
 
-
-## Otros Ejemplos
-
-### Bloques de códigos
-```swift
-func texto(texto: String = "default") {
-  //Comentario
-  let tex: String = "Python syntax highlighting"
-  let tex2: String = texto
-}
-```
-```swift
-let selector = #selector(viewDidLoad)
-view.backgroundColor = .red
-let toView = context.view(forKey: .to)
-let view = UIView(frame: .zero)
-```
-~~~ swift
-let text: String = "Texto"
-~~~
-
-
-### Resaltar texto
-> *Cursiva*
->> **Negrita**
->>> ***Negrita-Cursiva***
-
-(Se puede usar el signo `_` en lugar de `*`).
-
-
-### Badges
-[![AppStore][appStoreBagge]][appStore]
-[![Twitter Follow][twitter]][myTwitter]
-[![TestXc][testXc]][testXc]
-[![CocoapodsDocs][cocoDocs]][cocoDocs]
-[![Tag][tag]][tag]
-[![Release][release]][release]
-[![IssuesOpen][issuesOpen]][issuesOpen]
-[![LicenseGitHub][licenseGitHub]][licenseGitHub]
-[![DowEXTClass][dowEXTClass]][dowEXTClass]
-[![CommitEXT][commitEXT]][commitEXT]
-
-
-### Imagen
-![Imagen de logo][logo]
-
-
-
-
 <!-- Links -->
-[myTwitter]:http://twitter.com/matCorrenti
-[iOS_9.0]:https://img.shields.io/badge/iOS-≥_9.0-5658FE.svg?colorA=5658FE
-[swift_3.0]:https://img.shields.io/badge/Swift-≥_3.0-EF5138.svg?colorA=EF5138
-[xcode_3.2]:https://img.shields.io/badge/Xcode-≥_3.2-2A92F4.svg?colorA=2A92F4
-[Platform]:https://img.shields.io/badge/platform-ios-lightgrey.svg
 [License]:https://img.shields.io/badge/license-MIT-383838.svg
 
-
-<!-- Otros -->
-[appStore]:https://itunes.apple.com/ar/app/luteranos/id1137428395
-[appStoreBagge]:https://img.shields.io/badge/Download_App-Luteranos-1C5FAD.svg
-[twitter]:https://img.shields.io/twitter/follow/matCorrenti.svg?style=social&label=Follow&maxAge=3600
-[testXc]:https://img.shields.io/badge/Xcode-≥_3.2-2A92F4.svg?colorA=0873A4
-[cocoDocs]:https://img.shields.io/cocoapods/metrics/doc-percent/EXTClass.svg
-[tag]:https://img.shields.io/github/tag/Saitco/EXTClass.svg
-[release]:https://img.shields.io/github/release/Saitco/EXTClass.svg
-[issuesOpen]:https://img.shields.io/github/issues/Saitco/README.svg
-[licenseGitHub]:https://img.shields.io/github/license/Saitco/README.svg
-[dowEXTClass]:https://img.shields.io/github/downloads/Saitco/README/total.svg
-[commitEXT]:https://img.shields.io/github/commits-since/Saitco/EXTClass/0.3.2.svg
-
-
-<!-- Links Imagenes -->
-[logo]:https://github.com/Saitco/README/blob/master/img/rosaL.png "Icono de la App"
